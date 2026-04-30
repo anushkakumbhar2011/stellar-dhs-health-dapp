@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, CheckCircle, AlertCircle, Loader } from 'lucide-react';
-import { isConnected, getPublicKey, requestAccess } from '@stellar/freighter-api';
+import { isConnected, getAddress, requestAccess } from '@stellar/freighter-api';
 import './WalletConnect.css';
 
 function WalletConnect() {
@@ -16,17 +16,27 @@ function WalletConnect() {
     
     try {
       // Check if Freighter is installed
-      const freighterInstalled = await isConnected();
+      const { isConnected: freighterInstalled } = await isConnected();
       
       if (!freighterInstalled) {
         throw new Error('Freighter wallet not found. Please install the Freighter browser extension.');
       }
       
       // Request access to wallet
-      await requestAccess();
+      const accessResult = await requestAccess();
       
-      // Get public key
-      const publicKey = await getPublicKey();
+      if (accessResult.error) {
+        throw new Error(accessResult.error.message || 'Failed to get wallet access');
+      }
+      
+      // Get wallet address
+      const addressResult = await getAddress();
+      
+      if (addressResult.error) {
+        throw new Error(addressResult.error.message || 'Failed to get wallet address');
+      }
+      
+      const publicKey = addressResult.address;
       
       if (!publicKey) {
         throw new Error('Failed to get wallet address. Please try again.');

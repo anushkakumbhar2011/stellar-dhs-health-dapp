@@ -6,7 +6,7 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
 import { 
   isConnected, 
-  getPublicKey, 
+  getAddress,
   signTransaction 
 } from '@stellar/freighter-api';
 import { 
@@ -53,7 +53,8 @@ class ContractService {
    */
   async isWalletConnected() {
     try {
-      return await isConnected();
+      const result = await isConnected();
+      return result.isConnected || false;
     } catch (error) {
       console.error('Error checking wallet connection:', error);
       return false;
@@ -70,13 +71,47 @@ class ContractService {
         return this.userAddress;
       }
       
-      const publicKey = await getPublicKey();
+      const result = await getAddress();
+      
+      if (result.error) {
+        throw new Error(result.error.message || 'Failed to get wallet address');
+      }
+      
+      const publicKey = result.address;
+      
+      if (!publicKey) {
+        throw new Error('No wallet address returned');
+      }
+      
       this.userAddress = publicKey;
       return publicKey;
     } catch (error) {
       console.error('Error getting user address:', error);
       throw new Error('Failed to get wallet address. Please connect Freighter wallet.');
     }
+  }
+
+  /**
+   * Sign transaction with Freighter
+   * @private
+   * @param {Transaction} transaction - Prepared transaction
+   * @param {string} userAddress - User's wallet address
+   * @returns {Promise<Transaction>} Signed transaction
+   */
+  async signWithFreighter(transaction, userAddress) {
+    const signResult = await signTransaction(transaction.toXDR(), {
+      address: userAddress,
+      networkPassphrase: NETWORK_CONFIG.networkPassphrase,
+    });
+
+    if (signResult.error) {
+      throw new Error(signResult.error.message || 'Transaction signing failed');
+    }
+
+    return StellarSdk.TransactionBuilder.fromXDR(
+      signResult.signedTxXdr,
+      NETWORK_CONFIG.networkPassphrase
+    );
   }
 
   /**
@@ -112,15 +147,7 @@ class ContractService {
       const prepared = await this.server.prepareTransaction(transaction);
 
       // Sign with Freighter
-      const signedXdr = await signTransaction(prepared.toXDR(), {
-        network: NETWORK_CONFIG.network,
-        networkPassphrase: NETWORK_CONFIG.networkPassphrase,
-      });
-
-      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
-        signedXdr,
-        NETWORK_CONFIG.networkPassphrase
-      );
+      const signedTx = await this.signWithFreighter(prepared, userAddress);
 
       // Submit transaction
       const result = await this.server.sendTransaction(signedTx);
@@ -167,15 +194,7 @@ class ContractService {
       const prepared = await this.server.prepareTransaction(transaction);
 
       // Sign with Freighter
-      const signedXdr = await signTransaction(prepared.toXDR(), {
-        network: NETWORK_CONFIG.network,
-        networkPassphrase: NETWORK_CONFIG.networkPassphrase,
-      });
-
-      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
-        signedXdr,
-        NETWORK_CONFIG.networkPassphrase
-      );
+      const signedTx = await this.signWithFreighter(prepared, userAddress);
 
       // Submit and wait
       const result = await this.server.sendTransaction(signedTx);
@@ -220,14 +239,7 @@ class ContractService {
         .build();
 
       const prepared = await this.server.prepareTransaction(transaction);
-      const signedXdr = await signTransaction(prepared.toXDR(), {
-        network: NETWORK_CONFIG.network,
-        networkPassphrase: NETWORK_CONFIG.networkPassphrase,
-      });
-
-      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
-        signedXdr,
-        NETWORK_CONFIG.networkPassphrase
+      const signedTx = await this.signWithFreighter(prepared, userAddress);
       );
 
       const result = await this.server.sendTransaction(signedTx);
@@ -268,14 +280,7 @@ class ContractService {
         .build();
 
       const prepared = await this.server.prepareTransaction(transaction);
-      const signedXdr = await signTransaction(prepared.toXDR(), {
-        network: NETWORK_CONFIG.network,
-        networkPassphrase: NETWORK_CONFIG.networkPassphrase,
-      });
-
-      const signedTx = StellarSdk.TransactionBuilder.fromXDR(
-        signedXdr,
-        NETWORK_CONFIG.networkPassphrase
+      const signedTx = await this.signWithFreighter(prepared, userAddress);
       );
 
       const result = await this.server.sendTransaction(signedTx);
