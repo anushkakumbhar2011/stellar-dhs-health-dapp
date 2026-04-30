@@ -17,6 +17,11 @@
 **Frontend:** [https://dhs-health.vercel.app](https://dhs-health.vercel.app) *(Replace with your deployment URL)*  
 **Contract Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCB5YFXGTLY2UZXTP5SDJK3WI2NREM5QKG22SAZHPNGEYIPUDUAZIWDF)
 
+So here's a screenshot of vercel's deployment 
+
+<img width="1470" height="956" alt="Screenshot 2026-05-01 at 12 34 14 AM" src="https://github.com/user-attachments/assets/ea5fe347-5b67-44e9-9ec5-b49898bde49e" />
+
+
 ### Demo Credentials
 
 | Role | Wallet Address | Description |
@@ -893,3 +898,18 @@ For questions, issues, or feedback:
 [⬆ Back to Top](#dhs--decentralized-health-system)
 
 </div>
+
+
+
+here are the ss of my project:
+
+
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 52 PM" src="https://github.com/user-attachments/assets/02f01140-bec4-4ff9-847b-030e0d2ec193" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 46 PM" src="https://github.com/user-attachments/assets/e9ca5d2b-35a4-4c85-8205-9efca9bde1a6" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 41 PM" src="https://github.com/user-attachments/assets/b044a049-d0fa-4a5c-9ff9-8768eb323865" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 37 PM" src="https://github.com/user-attachments/assets/177f8bb5-876c-4c98-9de6-286b21b33c60" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 32 PM" src="https://github.com/user-attachments/assets/f7be8fb3-1bc6-430c-a689-8038659941cf" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 26 PM" src="https://github.com/user-attachments/assets/da84ba79-d412-4917-b9f2-c9d0516767b2" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 22 19 PM" src="https://github.com/user-attachments/assets/c3224ef8-2dd6-4253-b8fb-e437e558be6c" />
+<img width="1470" height="956" alt="Screenshot 2026-04-29 at 6 23 10 PM" src="https://github.com/user-attachments/assets/2748ad4f-2fa9-4528-af0f-fbbc581321b8" />
+
