@@ -18,6 +18,10 @@
 **Contract Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCB5YFXGTLY2UZXTP5SDJK3WI2NREM5QKG22SAZHPNGEYIPUDUAZIWDF)  
 **Smart Contract Source:** [View on GitHub](https://github.com/anushkakumbhar2011/stellar-dhs-health-dapp/tree/main/contracts/dhs-health-records)
 
+### Live Deployment Screenshot
+
+<img width="1470" height="956" alt="Screenshot 2026-05-01 at 12 34 14 AM" src="https://github.com/user-attachments/assets/ea5fe347-5b67-44e9-9ec5-b49898bde49e" />
+
 ### Demo Credentials
 
 | Role | Wallet Address | Description |
