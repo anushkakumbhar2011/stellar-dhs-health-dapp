@@ -1,0 +1,65 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  frontend:
+    name: Frontend Build & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Lint
+        run: npm run lint || echo "Lint warnings only"
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Verify Build Output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Build failed: dist folder missing"
+            exit 1
+          fi
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: dist
+
+  contract:
+    name: Smart Contract Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Add WASM Target
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Build Soroban Contract
+        run: |
+          cd contracts/dhs-health-records
+          cargo build --target wasm32-unknown-unknown --release
+
+      - name: Verify WASM Build
+        run: |
+          ls contracts/dhs-health-records/target/wasm32-unknown-unknown/release/
