@@ -18,11 +18,30 @@ import {
 
 class ContractService {
   constructor() {
-    // Initialize Soroban RPC server
-    this.server = new StellarSdk.SorobanRpc.Server(NETWORK_CONFIG.rpcUrl);
+    // Graceful fallback for SorobanRpc.Server initialization
+    try {
+      // Try new SDK structure first
+      if (StellarSdk.SorobanRpc && StellarSdk.SorobanRpc.Server) {
+        this.server = new StellarSdk.SorobanRpc.Server(NETWORK_CONFIG.rpcUrl);
+      } else if (StellarSdk.Server) {
+        // Fallback to older SDK structure
+        this.server = new StellarSdk.Server(NETWORK_CONFIG.rpcUrl);
+      } else {
+        console.warn('⚠️ Soroban RPC Server not available in SDK. Contract features will be limited.');
+        this.server = null;
+      }
+    } catch (error) {
+      console.error('❌ Failed to initialize Soroban RPC Server:', error);
+      this.server = null;
+    }
     
     // Initialize contract
-    this.contract = new StellarSdk.Contract(CONTRACT_ID);
+    try {
+      this.contract = new StellarSdk.Contract(CONTRACT_ID);
+    } catch (error) {
+      console.error('❌ Failed to initialize contract:', error);
+      this.contract = null;
+    }
     
     // Cache for user address
     this.userAddress = null;
