@@ -62,4 +62,13 @@ jobs:
 
       - name: Verify WASM Build
         run: |
-          ls contracts/dhs-health-records/target/wasm32-unknown-unknown/release/
+          ls -lh contracts/dhs-health-records/target/wasm32-unknown-unknown/release/*.wasm
+          echo "WASM file size:"
+          du -h contracts/dhs-health-records/target/wasm32-unknown-unknown/release/*.wasm
+
+      - name: Upload Contract WASM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: contract-wasm
+          path: contracts/dhs-health-records/target/wasm32-unknown-unknown/release/*.wasm
+          retention-days: 7
