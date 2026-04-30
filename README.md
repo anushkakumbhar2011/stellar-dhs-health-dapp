@@ -14,7 +14,7 @@
 
 ## 🌐 Live Demo
 
-**Frontend:** [https://dhs-health.vercel.app](https://dhs-health.vercel.app) *(Replace with your deployment URL)*  
+Frontend: stellar-dhs-health-dapp-8137.vercel.app
 **Contract Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCB5YFXGTLY2UZXTP5SDJK3WI2NREM5QKG22SAZHPNGEYIPUDUAZIWDF)
 
 So here's a screenshot of vercel's deployment 
