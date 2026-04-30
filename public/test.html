@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHS - Diagnostic Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .warning { color: #f39c12; }
+        h1 { color: #2c3e50; }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏥 DHS - System Diagnostic</h1>
+    
+    <div class="test-card">
+        <h2>✅ Basic HTML/CSS Test</h2>
+        <p class="success">If you can see this page, basic HTML rendering works!</p>
+    </div>
+
+    <div class="test-card">
+        <h2>🔍 JavaScript Test</h2>
+        <p id="js-test" class="warning">Testing JavaScript...</p>
+    </div>
+
+    <div class="test-card">
+        <h2>📦 Module Loading Test</h2>
+        <p id="module-test" class="warning">Testing ES modules...</p>
+    </div>
+
+    <div class="test-card">
+        <h2>🌐 Network Test</h2>
+        <p id="network-test" class="warning">Testing network connectivity...</p>
+    </div>
+
+    <div class="test-card">
+        <h2>📊 Browser Information</h2>
+        <pre id="browser-info"></pre>
+    </div>
+
+    <div class="test-card">
+        <h2>🔗 Navigation</h2>
+        <p><a href="/">← Back to Main App</a></p>
+    </div>
+
+    <script>
+        // JavaScript Test
+        document.getElementById('js-test').innerHTML = '<span class="success">✅ JavaScript is working!</span>';
+        
+        // Browser Info
+        document.getElementById('browser-info').textContent = `
+User Agent: ${navigator.userAgent}
+Platform: ${navigator.platform}
+Language: ${navigator.language}
+Online: ${navigator.onLine}
+Cookies Enabled: ${navigator.cookieEnabled}
+        `.trim();
+
+        // Module Test
+        try {
+            import('./favicon.svg').then(() => {
+                document.getElementById('module-test').innerHTML = '<span class="success">✅ ES Modules working!</span>';
+            }).catch(err => {
+                document.getElementById('module-test').innerHTML = `<span class="error">❌ Module loading failed: ${err.message}</span>`;
+            });
+        } catch (err) {
+            document.getElementById('module-test').innerHTML = `<span class="error">❌ Module import failed: ${err.message}</span>`;
+        }
+
+        // Network Test
+        fetch('/favicon.svg')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('network-test').innerHTML = '<span class="success">✅ Network requests working!</span>';
+                } else {
+                    document.getElementById('network-test').innerHTML = `<span class="warning">⚠️ Network response: ${response.status}</span>`;
+                }
+            })
+            .catch(err => {
+                document.getElementById('network-test').innerHTML = `<span class="error">❌ Network failed: ${err.message}</span>`;
+            });
+    </script>
+</body>
+</html>
