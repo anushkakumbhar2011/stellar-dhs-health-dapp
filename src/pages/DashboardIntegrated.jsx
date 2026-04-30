@@ -22,6 +22,7 @@ function DashboardIntegrated() {
     getRecords,
     refresh,
     clearError,
+    checkConnection,
     rewardAmount,
   } = useContract();
 
@@ -128,9 +129,22 @@ function DashboardIntegrated() {
           <AlertCircle size={48} />
           <h2>Wallet Not Connected</h2>
           <p>Please connect your Freighter wallet to access the dashboard</p>
-          <Link to="/connect" className="btn btn-primary">
-            Connect Wallet
-          </Link>
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <Link to="/connect" className="btn btn-primary">
+              Connect Wallet
+            </Link>
+            <button 
+              onClick={async () => {
+                await checkConnection();
+              }} 
+              className="btn btn-secondary"
+            >
+              Check Connection
+            </button>
+          </div>
+          <p style={{ marginTop: '1rem', fontSize: '14px', color: 'var(--dhs-text-tertiary)' }}>
+            Already connected? Click "Check Connection" to refresh
+          </p>
         </div>
       </div>
     );

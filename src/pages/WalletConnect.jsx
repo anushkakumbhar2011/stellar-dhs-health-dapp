@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { isConnected, getPublicKey, requestAccess } from '@stellar/freighter-api';
 import './WalletConnect.css';
 
 function WalletConnect() {
@@ -14,21 +15,36 @@ function WalletConnect() {
     setError('');
     
     try {
-      // Simulate wallet connection
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Check if Freighter is installed
+      const freighterInstalled = await isConnected();
       
-      // Mock wallet address
-      const mockAddress = 'GBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-      setWalletAddress(mockAddress);
+      if (!freighterInstalled) {
+        throw new Error('Freighter wallet not found. Please install the Freighter browser extension.');
+      }
+      
+      // Request access to wallet
+      await requestAccess();
+      
+      // Get public key
+      const publicKey = await getPublicKey();
+      
+      if (!publicKey) {
+        throw new Error('Failed to get wallet address. Please try again.');
+      }
+      
+      setWalletAddress(publicKey);
       setStatus('connected');
+      
+      console.log('✅ Wallet connected:', publicKey);
       
       // Redirect to dashboard
       setTimeout(() => {
         navigate('/dashboard');
       }, 1500);
     } catch (err) {
+      console.error('❌ Wallet connection failed:', err);
       setStatus('error');
-      setError('Connection rejected. Please try again.');
+      setError(err.message || 'Connection rejected. Please try again.');
     }
   };
 
@@ -62,7 +78,7 @@ function WalletConnect() {
               rel="noopener noreferrer" 
               className="wallet-link"
             >
-              What is Freighter?
+              Don't have Freighter? Install it here
             </a>
             
             <div className="wallet-security-note">
@@ -81,7 +97,7 @@ function WalletConnect() {
             
             <h1 className="wallet-title">Connecting...</h1>
             <p className="wallet-description">
-              Waiting for wallet approval
+              Please approve the connection in Freighter
             </p>
             
             <div className="spinner-wrapper">
@@ -133,10 +149,22 @@ function WalletConnect() {
               <button className="btn btn-primary" onClick={connectWallet}>
                 Try Again
               </button>
-              <button className="btn btn-ghost" onClick={() => setStatus('idle')}>
-                Cancel
+              <button className="btn btn-ghost" onClick={() => navigate('/')}>
+                Go Back
               </button>
             </div>
+            
+            {error.includes('not found') && (
+              <a 
+                href="https://www.freighter.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-secondary"
+                style={{ marginTop: '1rem' }}
+              >
+                Install Freighter
+              </a>
+            )}
           </div>
         )}
       </div>

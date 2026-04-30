@@ -17,10 +17,15 @@ export function useContract() {
   const [error, setError] = useState(null);
 
   /**
-   * Check wallet connection on mount
+   * Check wallet connection on mount and periodically
    */
   useEffect(() => {
     checkConnection();
+    
+    // Re-check connection every 2 seconds
+    const interval = setInterval(checkConnection, 2000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   /**

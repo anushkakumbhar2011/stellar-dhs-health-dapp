@@ -5,15 +5,20 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    // Ensure proper MIME types for Safari
-    headers: {
-      'Content-Type': 'application/javascript; charset=utf-8'
-    }
+    port: 5175,
+    strictPort: false,
+    host: true
   },
   build: {
-    // Ensure proper module format
     target: 'es2015',
-    minify: 'esbuild',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
   }
 })

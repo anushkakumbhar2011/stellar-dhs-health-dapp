@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React CDN Test</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        function App() {
+            return (
+                <div style={{ 
+                    padding: '40px', 
+                    fontFamily: 'system-ui',
+                    textAlign: 'center',
+                    background: '#f0f0f0',
+                    minHeight: '100vh'
+                }}>
+                    <h1 style={{ color: '#27ae60' }}>✅ React Works with CDN!</h1>
+                    <p style={{ color: '#666' }}>
+                        If you can see this, React itself is working fine.
+                        <br />
+                        The issue is with Vite's module system in Safari.
+                    </p>
+                    <button 
+                        onClick={() => alert('React is working!')}
+                        style={{
+                            padding: '10px 20px',
+                            background: '#3498db',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '16px',
+                            marginTop: '20px'
+                        }}
+                    >
+                        Test Click
+                    </button>
+                    <div style={{ marginTop: '40px', padding: '20px', background: 'white', borderRadius: '8px' }}>
+                        <h2>Next Steps:</h2>
+                        <ol style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto' }}>
+                            <li>Open Safari Console (Cmd+Option+C)</li>
+                            <li>Go to http://localhost:5177/</li>
+                            <li>Copy ALL console messages</li>
+                            <li>Share them so we can fix the Vite issue</li>
+                        </ol>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
