@@ -1,0 +1,217 @@
+/* Contract Integration Styles */
+
+/* Connection Prompt */
+.connection-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-6);
+  text-align: center;
+  gap: var(--space-3);
+}
+
+.connection-prompt svg {
+  color: var(--dhs-primary);
+}
+
+.connection-prompt h2 {
+  font-size: 28px;
+  color: var(--dhs-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.connection-prompt p {
+  font-size: 16px;
+  color: var(--dhs-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+/* Alert Messages */
+.alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  animation: slideIn 300ms ease;
+}
+
+.alert-error {
+  background: var(--dhs-error-bg);
+  border: 2px solid var(--dhs-error-border);
+  color: var(--dhs-error);
+}
+
+.alert-success {
+  background: var(--dhs-success-bg);
+  border: 2px solid var(--dhs-success-border);
+  color: var(--dhs-success);
+}
+
+.alert-info {
+  background: var(--dhs-info-bg);
+  border: 2px solid var(--dhs-info-border);
+  color: var(--dhs-info);
+}
+
+.alert span {
+  flex: 1;
+  font-weight: 500;
+}
+
+.alert .btn-icon {
+  background: transparent;
+  color: inherit;
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  gap: var(--space-3);
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--dhs-primary-light);
+  border-top-color: var(--dhs-primary);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  color: var(--dhs-text-secondary);
+  font-size: 15px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.empty-state svg {
+  color: var(--dhs-text-muted);
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  color: var(--dhs-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.empty-state p {
+  color: var(--dhs-text-secondary);
+  font-size: 15px;
+}
+
+/* Upload Error */
+.upload-error {
+  padding: var(--space-2);
+  background: var(--dhs-error-bg);
+  border: 2px solid var(--dhs-error-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Token Balance Display */
+.token-balance {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--dhs-primary-light);
+  border: 2px solid var(--dhs-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  color: var(--dhs-primary-dark);
+}
+
+.token-balance svg {
+  color: var(--dhs-primary);
+}
+
+/* Transaction Status */
+.tx-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tx-status.pending {
+  background: var(--dhs-warning-bg);
+  color: var(--dhs-warning);
+}
+
+.tx-status.success {
+  background: var(--dhs-success-bg);
+  color: var(--dhs-success);
+}
+
+.tx-status.failed {
+  background: var(--dhs-error-bg);
+  color: var(--dhs-error);
+}
+
+/* Blockchain Badge */
+.blockchain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 6px 12px;
+  background: var(--dhs-info-bg);
+  border: 2px solid var(--dhs-info-border);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dhs-info);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blockchain-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dhs-info);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .connection-prompt {
+    padding: var(--space-4);
+  }
+
+  .alert {
+    flex-direction: column;
+    text-align: center;
+  }
+}

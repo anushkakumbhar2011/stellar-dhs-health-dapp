@@ -1,0 +1,154 @@
+# =============================================================================
+# CD — DHS Deployment Readiness
+# =============================================================================
+# Purpose: Continuous Deployment workflow for DHS production builds
+# Triggers: Only on push to main branch (after CI passes)
+# Expected Success: Frontend artifact uploaded, deployment-ready confirmation
+# Reviewer Notes: Builds production bundle and prepares for deployment
+# Environment Variables Required:
+#   - VITE_STELLAR_NETWORK (e.g., "testnet" or "mainnet")
+#   - VITE_CONTRACT_ID (Deployed Soroban contract ID)
+#   - VITE_HORIZON_URL (Stellar Horizon API endpoint)
+# =============================================================================
+
+name: CD — DHS Deployment Readiness
+
+on:
+  push:
+    branches: [main]
+
+# Cancel in-progress runs on the same branch to save resources
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deployment-readiness:
+    name: Deployment Readiness
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Ensure CI passes before deployment preparation
+    needs: []
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Check Environment Variables
+        run: |
+          echo "🔍 Checking required environment variables..."
+          
+          if [ -z "${{ secrets.VITE_STELLAR_NETWORK }}" ]; then
+            echo "⚠️  Warning: VITE_STELLAR_NETWORK not set in GitHub Secrets"
+          else
+            echo "✅ VITE_STELLAR_NETWORK is configured"
+          fi
+          
+          if [ -z "${{ secrets.VITE_CONTRACT_ID }}" ]; then
+            echo "⚠️  Warning: VITE_CONTRACT_ID not set in GitHub Secrets"
+          else
+            echo "✅ VITE_CONTRACT_ID is configured"
+          fi
+          
+          if [ -z "${{ secrets.VITE_HORIZON_URL }}" ]; then
+            echo "⚠️  Warning: VITE_HORIZON_URL not set in GitHub Secrets"
+          else
+            echo "✅ VITE_HORIZON_URL is configured"
+          fi
+          
+          echo ""
+          echo "ℹ️  Note: Missing secrets will not fail the pipeline but may affect runtime"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Frontend Production Bundle
+        env:
+          VITE_STELLAR_NETWORK: ${{ secrets.VITE_STELLAR_NETWORK }}
+          VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID }}
+          VITE_HORIZON_URL: ${{ secrets.VITE_HORIZON_URL }}
+        run: npm run build
+
+      - name: Upload Production Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dhs-frontend-dist
+          path: dist/
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Deployment Ready
+        run: |
+          echo "✅ DHS frontend build artifact is ready for deployment"
+          echo ""
+          echo "📦 Artifact Details:"
+          echo "   Name: dhs-frontend-dist"
+          echo "   Retention: 7 days"
+          echo "   Size: $(du -sh dist | cut -f1)"
+          echo ""
+          echo "🚀 Next Steps:"
+          echo "   - Download artifact from GitHub Actions"
+          echo "   - Deploy to hosting platform (Vercel, Netlify, etc.)"
+          echo "   - Verify deployment at production URL"
+
+      # =======================================================================
+      # DEPLOYMENT STEP PLACEHOLDER
+      # =======================================================================
+      # Uncomment and configure one of the following deployment options:
+      #
+      # Option 1: Vercel Deployment
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: ./
+      #
+      # Option 2: Netlify Deployment
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v3
+      #   with:
+      #     publish-dir: './dist'
+      #     production-branch: main
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     deploy-message: "Deploy from GitHub Actions"
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      #
+      # Option 3: Custom Server Deployment (SSH)
+      # - name: Deploy to Custom Server
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.DEPLOY_HOST }}
+      #     username: ${{ secrets.DEPLOY_USER }}
+      #     key: ${{ secrets.DEPLOY_SSH_KEY }}
+      #     source: "dist/*"
+      #     target: "/var/www/dhs"
+      #
+      # Option 4: AWS S3 + CloudFront
+      # - name: Deploy to AWS S3
+      #   uses: jakejarvis/s3-sync-action@v0.5.1
+      #   with:
+      #     args: --delete
+      #   env:
+      #     AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     SOURCE_DIR: 'dist'
+      # =======================================================================

@@ -1,0 +1,275 @@
+/* Wallet Connect Page - Vibrant Professional Design (No Gray) */
+
+.wallet-connect-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dhs-bg-primary);
+  padding: var(--space-3);
+}
+
+.wallet-container {
+  width: 100%;
+  max-width: 480px;
+  animation: fadeIn 400ms ease;
+}
+
+/* Wallet Card - Solid white background for high contrast */
+.wallet-card {
+  background: var(--dhs-bg-secondary);
+  border: 2px solid var(--dhs-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--dhs-card-shadow-hover);
+  text-align: center;
+}
+
+/* Icon Wrapper */
+.wallet-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dhs-primary-light);
+  border: 3px solid var(--dhs-primary);
+  border-radius: var(--radius-md);
+  color: var(--dhs-primary);
+  position: relative;
+}
+
+.wallet-icon-wrapper.connecting {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+.pulse-ring {
+  position: absolute;
+  inset: -10px;
+  border: 3px solid var(--dhs-primary);
+  border-radius: var(--radius-md);
+  animation: pulseRing 2s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.wallet-icon-wrapper.success {
+  background: var(--dhs-success-bg);
+  border-color: var(--dhs-success);
+  color: var(--dhs-success);
+  animation: scaleIn 400ms ease;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.wallet-icon-wrapper.error {
+  background: var(--dhs-error-bg);
+  border-color: var(--dhs-error);
+  color: var(--dhs-error);
+}
+
+/* Typography - High contrast */
+.wallet-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dhs-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.wallet-description {
+  font-size: 14px;
+  color: var(--dhs-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.wallet-description.error-text {
+  color: var(--dhs-error);
+  font-weight: 600;
+}
+
+/* Wallet Connect Button */
+.wallet-connect-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--dhs-bg-secondary);
+  border: 2px solid var(--dhs-border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 250ms ease;
+  margin-bottom: var(--space-2);
+}
+
+.wallet-connect-button:hover {
+  border-color: var(--dhs-primary);
+  background: var(--dhs-primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--dhs-card-shadow-hover);
+}
+
+.wallet-button-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dhs-gradient-primary);
+  border-radius: var(--radius-sm);
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.wallet-button-content {
+  flex: 1;
+  text-align: left;
+}
+
+.wallet-button-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dhs-text-primary);
+  margin-bottom: 4px;
+}
+
+/* Link */
+.wallet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--dhs-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  transition: all 200ms ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.wallet-link:hover {
+  background: var(--dhs-primary-light);
+}
+
+/* Security Note */
+.wallet-security-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--dhs-success-bg);
+  border: 2px solid var(--dhs-success-border);
+  border-radius: var(--radius-sm);
+  color: var(--dhs-success);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Spinner */
+.spinner-wrapper {
+  margin: var(--space-4) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.spinner-icon {
+  color: var(--dhs-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Wallet Address Display */
+.wallet-address-display {
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  padding: var(--space-3);
+  background: var(--dhs-primary-light);
+  border: 2px solid var(--dhs-primary);
+  border-radius: var(--radius-sm);
+  margin: var(--space-3) 0;
+  color: var(--dhs-primary-dark);
+}
+
+/* Actions */
+.wallet-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.wallet-actions .btn {
+  flex: 1;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--dhs-border-light);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-top: var(--space-3);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--dhs-gradient-success);
+  transition: width 300ms ease;
+  box-shadow: 0 0 8px var(--dhs-success);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wallet-card {
+    padding: var(--space-4);
+  }
+  
+  .wallet-title {
+    font-size: 24px;
+  }
+  
+  .wallet-actions {
+    flex-direction: column;
+  }
+  
+  .wallet-actions .btn {
+    width: 100%;
+  }
+}

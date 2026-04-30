@@ -1,0 +1,1 @@
+/Users/asha/Desktop/MyPCFolder/2\ Stelar/DHS\ —\ Decentralized\ Health\ System/contracts/dhs-health-records/target/wasm32v1-none/release/dhs_health_records.wasm: /Users/asha/Desktop/MyPCFolder/2\ Stelar/DHS\ —\ Decentralized\ Health\ System/contracts/dhs-health-records/src/lib.rs
