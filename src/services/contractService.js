@@ -240,7 +240,6 @@ class ContractService {
 
       const prepared = await this.server.prepareTransaction(transaction);
       const signedTx = await this.signWithFreighter(prepared, userAddress);
-      );
 
       const result = await this.server.sendTransaction(signedTx);
       const status = await this.waitForTransaction(result.hash);
@@ -281,7 +280,6 @@ class ContractService {
 
       const prepared = await this.server.prepareTransaction(transaction);
       const signedTx = await this.signWithFreighter(prepared, userAddress);
-      );
 
       const result = await this.server.sendTransaction(signedTx);
       const status = await this.waitForTransaction(result.hash);
