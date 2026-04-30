@@ -4,10 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>dhs---decentralized-health-system</title>
+    <title>DHS - Decentralized Health System</title>
+    <script>
+      // Global error handler for module loading issues
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('Failed to fetch')) {
+          console.error('Module loading error detected. Attempting recovery...');
+          // Log error but don't crash the app
+          e.preventDefault();
+        }
+      });
+      
+      // Unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+        // Prevent default to avoid console spam
+        e.preventDefault();
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <noscript>
+      <div style="padding: 20px; text-align: center; font-family: system-ui;">
+        <h1>JavaScript Required</h1>
+        <p>Please enable JavaScript to use DHS - Decentralized Health System</p>
+      </div>
+    </noscript>
   </body>
 </html>

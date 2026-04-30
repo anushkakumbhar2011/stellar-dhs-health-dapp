@@ -2,9 +2,8 @@
 
 **Secure, blockchain-powered medical records management on Stellar**
 
-<!-- Replace YOUR_USERNAME/YOUR_REPO with your actual GitHub repository path -->
-![CI](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/ci.yml/badge.svg?branch=main)
-![CD](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/cd.yml/badge.svg?branch=main)
+![CI](https://github.com/anushkakumbhar2011/stellar-dhs-health-dapp/actions/workflows/ci.yml/badge.svg?branch=main)
+![CD](https://github.com/anushkakumbhar2011/stellar-dhs-health-dapp/actions/workflows/cd.yml/badge.svg?branch=main)
 ![Stellar](https://img.shields.io/badge/Stellar-Testnet-7D00FF?logo=stellar)
 ![Soroban](https://img.shields.io/badge/Soroban-v21.7.0-blue)
 ![React](https://img.shields.io/badge/React-19.2.5-61DAFB?logo=react)

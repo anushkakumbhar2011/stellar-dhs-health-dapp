@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Rust/Cargo build artifacts
+**/target/
+**/*.rs.bk
+Cargo.lock
+
+# Backup folders
+backup_*/
+*_backup/
