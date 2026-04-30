@@ -168,15 +168,15 @@ function DashboardIntegrated() {
               <LayoutDashboard size={20} />
               <span>Dashboard</span>
             </Link>
-            <Link to="/dashboard" className="nav-item">
+            <Link to="/my-records" className="nav-item">
               <FileText size={20} />
               <span>My Records</span>
             </Link>
-            <Link to="/dashboard" className="nav-item">
+            <Link to="/upload" className="nav-item">
               <Upload size={20} />
               <span>Upload Record</span>
             </Link>
-            <Link to="/dashboard" className="nav-item">
+            <Link to="/shared" className="nav-item">
               <Share2 size={20} />
               <span>Shared With Me</span>
             </Link>
@@ -188,7 +188,7 @@ function DashboardIntegrated() {
               <Activity size={20} />
               <span>Transaction History</span>
             </Link>
-            <Link to="/dashboard" className="nav-item">
+            <Link to="/access-log" className="nav-item">
               <FileCheck size={20} />
               <span>Access Log</span>
             </Link>
@@ -196,7 +196,7 @@ function DashboardIntegrated() {
           
           <div className="nav-section">
             <div className="nav-label">SETTINGS</div>
-            <Link to="/dashboard" className="nav-item">
+            <Link to="/settings" className="nav-item">
               <Settings size={20} />
               <span>Account</span>
             </Link>
@@ -217,9 +217,17 @@ function DashboardIntegrated() {
             </div>
             <div className="badge badge-info">Testnet</div>
           </div>
-          <button className="btn btn-ghost btn-icon" title="Disconnect">
+          <Link 
+            to="/" 
+            className="btn btn-ghost btn-icon" 
+            title="Disconnect"
+            onClick={() => {
+              // Clear cache and redirect to home
+              window.location.href = '/';
+            }}
+          >
             <LogOut size={18} />
-          </button>
+          </Link>
         </div>
       </aside>
       

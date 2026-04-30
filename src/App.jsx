@@ -6,6 +6,11 @@ import Dashboard from './pages/Dashboard';
 import DashboardIntegrated from './pages/DashboardIntegrated';
 import RecordDetails from './pages/RecordDetails';
 import ActivityPage from './pages/ActivityPage';
+import Settings from './pages/Settings';
+import AccessLog from './pages/AccessLog';
+import SharedRecords from './pages/SharedRecords';
+import UploadRecord from './pages/UploadRecord';
+import MyRecords from './pages/MyRecords';
 import './App.css';
 import './styles/contract-integration.css';
 
@@ -70,12 +75,19 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/connect" element={<WalletConnect />} />
-          {/* Use DashboardIntegrated for blockchain integration */}
+          {/* Main dashboard */}
           <Route path="/dashboard" element={<DashboardIntegrated />} />
-          {/* Original dashboard available at /dashboard-demo */}
-          <Route path="/dashboard-demo" element={<Dashboard />} />
-          <Route path="/record/:id" element={<RecordDetails />} />
+          {/* Dashboard sections */}
+          <Route path="/my-records" element={<MyRecords />} />
+          <Route path="/upload" element={<UploadRecord />} />
+          <Route path="/shared" element={<SharedRecords />} />
           <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/access-log" element={<AccessLog />} />
+          <Route path="/settings" element={<Settings />} />
+          {/* Record details */}
+          <Route path="/record/:id" element={<RecordDetails />} />
+          {/* Original dashboard demo */}
+          <Route path="/dashboard-demo" element={<Dashboard />} />
         </Routes>
       </Router>
     </ErrorBoundary>
